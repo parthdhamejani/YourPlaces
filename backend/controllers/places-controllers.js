@@ -65,9 +65,7 @@ const getPlacesByUserId = async (req, res, next) => {
 const createPlace = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return next(
-      new HttpError('Invalid inputs passed, please check your data.', 422)
-    );
+    return next(new HttpError('Invalid inputs passed, please check your data.', 422));
   }
 
   const { title, description, address } = req.body;
@@ -85,40 +83,30 @@ const createPlace = async (req, res, next) => {
     address,
     location: coordinates,
     image: req.file.path,
-    creator: req.userData.userId
+    creator: req.userData.userId // or req.body.creator
   });
 
   let user;
   try {
     user = await User.findById(req.userData.userId);
   } catch (err) {
-    const error = new HttpError(
-      'Creating place failed, please try again.',
-      500
-    );
-    return next(error);
+    return next(new HttpError('Creating place failed, please try again.', 500));
   }
 
   if (!user) {
-    const error = new HttpError('Could not find user for provided id.', 404);
-    return next(error);
+    return next(new HttpError('Could not find user for provided id.', 404));
   }
 
-  console.log(user);
-
   try {
-    const sess = await mongoose.startSession();
-    sess.startTransaction();
-    await createdPlace.save({ session: sess });
+    // 1. Save the place
+    await createdPlace.save();
+
+    // 2. Push place to user's places array and save user
     user.places.push(createdPlace);
-    await user.save({ session: sess });
-    await sess.commitTransaction();
+    await user.save();
   } catch (err) {
-    const error = new HttpError(
-      'Creating place failed, please try again.',
-      500
-    );
-    return next(error);
+    console.log('Error during save:', err); // Log the exact error to your console
+    return next(new HttpError('Creating place failed, please try again.', 500));
   }
 
   res.status(201).json({ place: createdPlace });
