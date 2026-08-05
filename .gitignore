@@ -1,0 +1,11 @@
+# Root .gitignore
+.env
+*.env
+backend/.env
+frontend/.env
+
+node_modules/
+**/node_modules/
+
+.DS_Store
+**/uploads/
