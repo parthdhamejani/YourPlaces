@@ -49,7 +49,7 @@ app.use((error, req, res, next) => {
 
 mongoose
   .connect(
-    `mongodb://localhost:27017/mern-places`
+    process.env.MONGO_URI
   )
   .then(() => {
     app.listen(5000);
