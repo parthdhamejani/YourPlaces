@@ -169,11 +169,3 @@ http://localhost:3000
 ## 🤝 Contributing
 
 Contributions, issues, and feature requests are welcome.
-
-Feel free to fork the repository and submit a pull request.
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License.
