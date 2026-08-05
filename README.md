@@ -92,8 +92,7 @@ npm install
 Create a `.env` file:
 
 ```env
-PORT=5000
-MONGO_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/yourplaces?retryWrites=true&w=majority
+MONGO_URI=your_cluster_or_local_url
 JWT_KEY=your_super_secret_jwt_key
 GOOGLE_API_KEY=your_google_maps_api_key
 ```
@@ -122,7 +121,6 @@ npm install
 Create a `.env` file:
 
 ```env
-REACT_APP_BACKEND_URL=http://localhost:5000/api
 REACT_APP_GOOGLE_API_KEY=your_google_maps_api_key
 ```
 
